@@ -13,7 +13,7 @@ interface GroupContextComponentProps {
 const GroupContextComponent: React.FC<GroupContextComponentProps> = ({
   children,
 }) => {
-  const BASE_URL = process.env.BASE_URL + "/group";
+  const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/group`;
 
   const getDropdownGroups = async () => {
     try {
