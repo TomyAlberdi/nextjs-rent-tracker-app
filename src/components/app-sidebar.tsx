@@ -1,10 +1,9 @@
 "use client";
 
-import {
-  CircleDollarSign
-} from "lucide-react";
+import { CircleDollarSign } from "lucide-react";
 import * as React from "react";
 
+import { NavFooter } from "@/components/nav-footer";
 import { NavGroup } from "@/components/nav-group";
 import { NavIndividual } from "@/components/nav-individual";
 import {
@@ -44,6 +43,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavIndividual />
       </SidebarContent>
       <SidebarFooter>
+        <NavFooter />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
