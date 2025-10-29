@@ -13,7 +13,7 @@ interface PropertyContextComponentProps {
 const PropertyContextComponent: React.FC<PropertyContextComponentProps> = ({
   children,
 }) => {
-  const BASE_URL = process.env.BASE_URL + "/property";
+  const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/property`;
 
   const getProperties = async () => {
     try {

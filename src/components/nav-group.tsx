@@ -18,11 +18,11 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useGroupContext } from "@/context/group/useGroupContext";
 import { Group } from "@/lib/interfaces";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Skeleton } from "./ui/skeleton";
 
 export function NavGroup() {
   const { getGroups } = useGroupContext();
