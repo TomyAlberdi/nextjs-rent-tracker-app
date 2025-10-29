@@ -10,6 +10,7 @@ import {
 import GroupContextComponent from "@/context/group/GroupContextComponent";
 import PropertyContextComponent from "@/context/property/PropertyContextComponent";
 import RecordContextComponent from "@/context/record/RecordContextComponent";
+import { ThemeProvider } from "@/lib/theme-provider";
 import { Toaster } from "sonner";
 
 export default function RootLayout({
@@ -18,33 +19,38 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <PropertyContextComponent>
-          <GroupContextComponent>
-            <RecordContextComponent>
-              <SidebarProvider>
-                <AppSidebar />
-                <SidebarInset>
-                  <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
-                    <div className="flex items-center gap-2 px-4">
-                      <SidebarTrigger className="-ml-1" />
-                      <Separator
-                        orientation="vertical"
-                        className="mr-2 data-[orientation=vertical]:h-4"
-                      />
-                      {/* 
-                  //TODO: build nextjs breadcrumb
-                */}
-                    </div>
-                  </header>
-                  {children}
-                </SidebarInset>
-              </SidebarProvider>
-              <Toaster />
-            </RecordContextComponent>
-          </GroupContextComponent>
-        </PropertyContextComponent>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <PropertyContextComponent>
+            <GroupContextComponent>
+              <RecordContextComponent>
+                <SidebarProvider>
+                  <AppSidebar />
+                  <SidebarInset>
+                    <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+                      <div className="flex items-center gap-2 px-4">
+                        <SidebarTrigger className="-ml-1" />
+                        <Separator
+                          orientation="vertical"
+                          className="mr-2 data-[orientation=vertical]:h-4"
+                        />
+                        {/* TODO: build nextjs breadcrumb */}
+                      </div>
+                    </header>
+                    {children}
+                  </SidebarInset>
+                </SidebarProvider>
+                <Toaster />
+              </RecordContextComponent>
+            </GroupContextComponent>
+          </PropertyContextComponent>
+        </ThemeProvider>
       </body>
     </html>
   );
