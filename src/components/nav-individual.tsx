@@ -40,7 +40,7 @@ export function NavIndividual() {
               ))
           : properties.map((property) => (
               <SidebarMenuItem key={property.id}>
-                <SidebarMenuButton asChild tooltip={property.name}>
+                <SidebarMenuButton asChild tooltip={property.name} className="rounded-xs">
                   <Link href={`/property/${property.id}`}>
                     <span>{property.name}</span>
                   </Link>

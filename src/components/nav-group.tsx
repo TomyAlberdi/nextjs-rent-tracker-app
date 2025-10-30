@@ -55,7 +55,7 @@ export function NavGroup() {
                 defaultOpen={index === 0 ? true : false}
               >
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip={group.name}>
+                  <SidebarMenuButton asChild tooltip={group.name} className="rounded-xs">
                     <Link href={`/group/${group.id}`}>
                       <span>{group.name}</span>
                     </Link>
@@ -63,7 +63,7 @@ export function NavGroup() {
                   {group.properties?.length ? (
                     <>
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuAction className="data-[state=open]:rotate-90">
+                        <SidebarMenuAction className="data-[state=open]:rotate-90 rounded-xs">
                           <ChevronRight />
                           <span className="sr-only">Toggle</span>
                         </SidebarMenuAction>
@@ -72,7 +72,7 @@ export function NavGroup() {
                         <SidebarMenuSub>
                           {group.properties?.map((subItem) => (
                             <SidebarMenuSubItem key={subItem.name}>
-                              <SidebarMenuSubButton asChild>
+                              <SidebarMenuSubButton asChild className="rounded-xs">
                                 <Link href={`/property/${subItem.id}`}>
                                   <span>{subItem.name}</span>
                                 </Link>
