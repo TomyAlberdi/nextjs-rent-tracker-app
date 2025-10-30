@@ -39,7 +39,7 @@ export function NavGroup() {
   }, []);
 
   return (
-    <SidebarGroup>
+    <SidebarGroup className="px-0">
       <SidebarGroupLabel>Grupos</SidebarGroupLabel>
       <SidebarMenu>
         {isLoading
@@ -55,7 +55,7 @@ export function NavGroup() {
                 defaultOpen={index === 0 ? true : false}
               >
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip={group.name} className="rounded-xs">
+                  <SidebarMenuButton asChild tooltip={group.name} className="rounded-xs h-9">
                     <Link href={`/group/${group.id}`}>
                       <span>{group.name}</span>
                     </Link>
@@ -69,10 +69,10 @@ export function NavGroup() {
                         </SidebarMenuAction>
                       </CollapsibleTrigger>
                       <CollapsibleContent>
-                        <SidebarMenuSub>
+                        <SidebarMenuSub className="gap-0">
                           {group.properties?.map((subItem) => (
-                            <SidebarMenuSubItem key={subItem.name}>
-                              <SidebarMenuSubButton asChild className="rounded-xs">
+                            <SidebarMenuSubItem key={subItem.name} className="h-9">
+                              <SidebarMenuSubButton asChild className="rounded-xs h-full">
                                 <Link href={`/property/${subItem.id}`}>
                                   <span>{subItem.name}</span>
                                 </Link>
