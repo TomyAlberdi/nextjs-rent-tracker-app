@@ -1,7 +1,7 @@
 
 export default function Page() {
   return (
-    <div className="h-full w-full border border-red-500">
+    <div className="h-full w-full border border-red-500 text-sidebar-primary">
       home
     </div>
   )

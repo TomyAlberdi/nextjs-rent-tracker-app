@@ -29,7 +29,7 @@ export function NavIndividual() {
   }, []);
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+    <SidebarGroup>
       <SidebarGroupLabel>Individuales</SidebarGroupLabel>
       <SidebarMenu>
         {isLoading
