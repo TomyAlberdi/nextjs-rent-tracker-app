@@ -8,8 +8,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { usePropertyContext } from "@/context/property/usePropertyContext";
-import { Property } from "@/lib/interfaces";
+import { useUnitContext } from "@/context/unit/useUnitContext";
+import { Unit } from "@/lib/interfaces";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -18,13 +18,13 @@ interface NavUnitProps {
 }
 
 export function NavUnit({ ReloadUnits }: NavUnitProps) {
-  const { getProperties } = usePropertyContext();
+  const { getUnits } = useUnitContext();
 
-  const [properties, setProperties] = useState<Property[]>([]);
+  const [properties, setProperties] = useState<Unit[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getProperties().then((data) => {
+    getUnits().then((data) => {
       setProperties(data);
       setIsLoading(false);
     });
@@ -41,15 +41,15 @@ export function NavUnit({ ReloadUnits }: NavUnitProps) {
               .map((_, index) => (
                 <Skeleton key={index} className="h-4 w-full" />
               ))
-          : properties.map((property) => (
-              <SidebarMenuItem key={property.id}>
+          : properties.map((Unit) => (
+              <SidebarMenuItem key={Unit.id}>
                 <SidebarMenuButton
                   asChild
-                  tooltip={property.name}
+                  tooltip={Unit.name}
                   className="rounded-xs h-9"
                 >
-                  <Link href={`/unit/${property.id}`}>
-                    <span>{property.name}</span>
+                  <Link href={`/unit/${Unit.id}`}>
+                    <span>{Unit.name}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

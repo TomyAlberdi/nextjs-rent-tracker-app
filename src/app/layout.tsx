@@ -8,8 +8,8 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import GroupContextComponent from "@/context/group/GroupContextComponent";
-import PropertyContextComponent from "@/context/property/PropertyContextComponent";
 import RecordContextComponent from "@/context/record/RecordContextComponent";
+import UnitContextComponent from "@/context/unit/UnitContextComponent";
 import { ThemeProvider } from "@/lib/theme-provider";
 import { Toaster } from "sonner";
 
@@ -27,7 +27,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <PropertyContextComponent>
+          <UnitContextComponent>
             <GroupContextComponent>
               <RecordContextComponent>
                 <SidebarProvider>
@@ -51,7 +51,7 @@ export default function RootLayout({
                 <Toaster />
               </RecordContextComponent>
             </GroupContextComponent>
-          </PropertyContextComponent>
+          </UnitContextComponent>
         </ThemeProvider>
       </body>
     </html>

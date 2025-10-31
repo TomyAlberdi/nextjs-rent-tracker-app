@@ -3,18 +3,18 @@ export interface IdNameItem {
   name: string;
 }
 
-export interface Property {
+export interface Unit {
   id: string;
   name: string;
   description: string | null;
-  type: PropertyType;
+  type: UnitType;
   groupId: string | null;
 }
 
-export interface CreatePropertyDTO {
+export interface CreateUnitDTO {
   name: string;
   description: string | null;
-  type: PropertyType;
+  type: UnitType;
   groupId: string | null;
 }
 
@@ -22,7 +22,7 @@ export interface Group {
   id: string;
   name: string;
   description: string | null;
-  properties: Property[];
+  properties: Unit[];
 }
 
 export interface CreateGroupDTO {
@@ -32,7 +32,7 @@ export interface CreateGroupDTO {
 
 export interface Record {
   id: string | null;
-  type: PropertyType;
+  type: UnitType;
   parentId: string;
   month: number;
   year: number;
@@ -47,7 +47,7 @@ export interface Record {
 
 export interface CreateRecordDTO {
   id: string | null,
-  type: PropertyType;
+  type: UnitType;
   parentId: string;
   month: number;
   year: number;
@@ -76,13 +76,13 @@ export interface MonthlySummaryRecordDTO {
 export interface ParentSummaryRecordDTO {
   year: number;
   netIncome: number;
-  parentType: PropertyType;
+  parentType: UnitType;
   parentId: string;
   parentName: string;
   // internal fields (not stored in database)
   fill?: string;
 }
 
-export type PropertyType = 'INDIVIDUAL' | 'GROUPED';
+export type UnitType = 'INDIVIDUAL' | 'GROUPED';
 
 export type ExpenseType = 'INCOME' | 'EXPENSE';

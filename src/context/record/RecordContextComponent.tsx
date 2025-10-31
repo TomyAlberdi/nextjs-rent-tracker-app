@@ -1,5 +1,5 @@
 import { RecordContext, RecordContextType } from "@/context/record/RecordContext";
-import type { CreateRecordDTO, PropertyType } from "@/lib/interfaces";
+import type { CreateRecordDTO, UnitType } from "@/lib/interfaces";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 
@@ -13,7 +13,7 @@ const RecordContextComponent: React.FC<RecordContextComponentProps> = ({
   const BASE_URL = process.env.BASE_URL + "/record";
 
   const getRecords = async (
-    type: PropertyType,
+    type: UnitType,
     parentId: string,
     year: number
   ) => {
@@ -94,7 +94,7 @@ const RecordContextComponent: React.FC<RecordContextComponentProps> = ({
     }
   };
 
-  const getParentSummary = async (year: number, parentType: PropertyType) => {
+  const getParentSummary = async (year: number, parentType: UnitType) => {
     try {
       const url = `${BASE_URL}/record/ParentSummary/${year}?type=${parentType}`;
       const res = await fetch(url);

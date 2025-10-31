@@ -3,7 +3,7 @@
 import { CircleDollarSign } from "lucide-react";
 import * as React from "react";
 
-import CreateProperty from "@/components/createProperty";
+import CreateUnit from "@/components/createUnit";
 import { NavFooter } from "@/components/nav-footer";
 import { NavGroup } from "@/components/nav-group";
 import { NavUnit } from "@/components/nav-unit";
@@ -48,7 +48,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavUnit ReloadUnits={ReloadUnits} />
       </SidebarContent>
       <SidebarFooter>
-        <CreateProperty
+        <CreateUnit
           ReloadUnits={ReloadUnits}
           setReloadUnits={setReloadUnits}
         />

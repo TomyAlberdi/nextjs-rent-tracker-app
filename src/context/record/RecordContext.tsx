@@ -2,14 +2,14 @@ import type {
   CreateRecordDTO,
   MonthlySummaryRecordDTO,
   ParentSummaryRecordDTO,
-  PropertyType,
   Record,
+  UnitType,
 } from "@/lib/interfaces";
 import { createContext } from "react";
 
 export interface RecordContextType {
   getRecords: (
-    type: PropertyType,
+    type: UnitType,
     parentId: string,
     year: number
   ) => Promise<Record[]>;
@@ -18,7 +18,7 @@ export interface RecordContextType {
   getMonthlySummary: (year: number) => Promise<MonthlySummaryRecordDTO[]>;
   getParentSummary: (
     year: number,
-    parentType: PropertyType
+    parentType: UnitType
   ) => Promise<ParentSummaryRecordDTO[]>;
 }
 

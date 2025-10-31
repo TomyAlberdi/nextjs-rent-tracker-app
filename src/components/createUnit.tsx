@@ -15,29 +15,29 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useGroupContext } from "@/context/group/useGroupContext";
-import { usePropertyContext } from "@/context/property/usePropertyContext";
-import { CreatePropertyDTO, IdNameItem, Property } from "@/lib/interfaces";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CirclePlus, PencilLine } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import z from "zod";
-import { Input } from "./ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Spinner } from "./ui/spinner";
+} from "@/components/ui/select";
+import { Spinner } from "@/components/ui/spinner";
+import { useGroupContext } from "@/context/group/useGroupContext";
+import { useUnitContext } from "@/context/unit/useUnitContext";
+import { CreateUnitDTO, IdNameItem, Unit } from "@/lib/interfaces";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CirclePlus, PencilLine } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import z from "zod";
 
-interface CreatePropertyProps {
+interface CreateUnitProps {
   ReloadUnits: boolean;
   setReloadUnits: React.Dispatch<React.SetStateAction<boolean>>;
-  defaultProperty?: Property;
+  defaultUnit?: Unit;
 }
 
 const formSchema = z.object({
@@ -46,14 +46,14 @@ const formSchema = z.object({
   groupId: z.string().nullable(),
 });
 
-const CreateProperty = ({
-  defaultProperty,
+const CreateUnit = ({
+  defaultUnit,
   ReloadUnits,
   setReloadUnits,
-}: CreatePropertyProps) => {
+}: CreateUnitProps) => {
   const router = useRouter();
   const { getDropdownGroups } = useGroupContext();
-  const { createProperty, updateProperty } = usePropertyContext();
+  const { createUnit, updateUnit } = useUnitContext();
   const [DrawerOpen, setDrawerOpen] = useState(false);
   const [DropdownGroups, setDropdownGroups] = useState<IdNameItem[]>([]);
   const [Loading, setLoading] = useState(false);
@@ -61,15 +61,15 @@ const CreateProperty = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: defaultProperty?.name || "",
-      description: defaultProperty?.description || "",
-      groupId: defaultProperty?.groupId || null,
+      name: defaultUnit?.name || "",
+      description: defaultUnit?.description || "",
+      groupId: defaultUnit?.groupId || null,
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
-    const data: CreatePropertyDTO = {
+    const data: CreateUnitDTO = {
       name: values.name,
       description: values.description || null,
       type:
@@ -81,21 +81,21 @@ const CreateProperty = ({
           ? null
           : values.groupId,
     };
-    if (defaultProperty) {
-      const updatedProperty = await updateProperty(defaultProperty.id, data);
-      if (updatedProperty) {
+    if (defaultUnit) {
+      const updatedUnit = await updateUnit(defaultUnit.id, data);
+      if (updatedUnit) {
         form.reset();
         setReloadUnits(!ReloadUnits);
         setDrawerOpen(false);
-        router.push(`/unit/${updatedProperty.id}`);
+        router.push(`/unit/${updatedUnit.id}`);
       }
     } else {
-      const createdProperty = await createProperty(data);
-      if (createdProperty) {
+      const createdUnit = await createUnit(data);
+      if (createdUnit) {
         form.reset();
         setReloadUnits(!ReloadUnits);
         setDrawerOpen(false);
-        router.push(`/unit/${createdProperty.id}`);
+        router.push(`/unit/${createdUnit.id}`);
       }
     }
     setLoading(false);
@@ -109,7 +109,7 @@ const CreateProperty = ({
   return (
     <Drawer direction="right" open={DrawerOpen} onOpenChange={setDrawerOpen}>
       <DrawerTrigger asChild>
-        {defaultProperty ? (
+        {defaultUnit ? (
           <Button variant={"secondary"} className="w-full">
             <PencilLine />
             Editar Unidad
@@ -127,7 +127,7 @@ const CreateProperty = ({
       >
         <DrawerHeader>
           <DrawerTitle className="text-sidebar-primary text-2xl">
-            {defaultProperty ? "Editar" : "Crear"} Unidad
+            {defaultUnit ? "Editar" : "Crear"} Unidad
           </DrawerTitle>
         </DrawerHeader>
         <div>
@@ -170,7 +170,7 @@ const CreateProperty = ({
                     <FormLabel>Grupo</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={defaultProperty?.groupId || undefined}
+                      defaultValue={defaultUnit?.groupId || undefined}
                       disabled={DropdownGroups.length === 0}
                     >
                       <FormControl>
@@ -191,7 +191,7 @@ const CreateProperty = ({
                 )}
               />
               <Button disabled={Loading}>
-                {defaultProperty ? (
+                {defaultUnit ? (
                   <>
                     {Loading ? <Spinner /> : <PencilLine />}
                     Editar
@@ -211,4 +211,4 @@ const CreateProperty = ({
   );
 };
 
-export default CreateProperty;
+export default CreateUnit;
