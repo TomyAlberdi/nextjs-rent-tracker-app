@@ -40,7 +40,7 @@ const PropertyPage = () => {
     );
   }
 
-  return <div className="text-sidebar-">{Property?.name}</div>;
+  return <div>{Property?.name}</div>;
 };
 
 export default PropertyPage;

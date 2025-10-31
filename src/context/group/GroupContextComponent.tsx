@@ -51,7 +51,7 @@ const GroupContextComponent: React.FC<GroupContextComponentProps> = ({
     }
   };
 
-  const getGroup = async (groupId: string) => {
+  const getGroupById = async (groupId: string) => {
     try {
       const url = `${BASE_URL}/${groupId}`;
       const res = await fetch(url);
@@ -78,12 +78,12 @@ const GroupContextComponent: React.FC<GroupContextComponentProps> = ({
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
       if (!response.ok) {
         toast.error("Ocurrió un error al crear el grupo");
-        console.warn("Failed to create group:", data);
         return;
       }
+      const data = await response.json();
+      return data;
     } catch (err) {
       console.error("Failed to create group", err);
       toast.error("Ocurrió un error al crear el grupo");
@@ -99,12 +99,12 @@ const GroupContextComponent: React.FC<GroupContextComponentProps> = ({
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
       if (!response.ok) {
         toast.error("Ocurrió un error al actualizar el grupo");
-        console.warn("Failed to update group:", data);
         return;
       }
+      const data = await response.json();
+      return data;
     } catch (err) {
       console.error("Failed to update group", err);
       toast.error("Ocurrió un error al actualizar el grupo");
@@ -130,7 +130,7 @@ const GroupContextComponent: React.FC<GroupContextComponentProps> = ({
   const exportData: GroupContextType = {
     getDropdownGroups,
     getGroups,
-    getGroup,
+    getGroupById,
     createGroup,
     updateGroup,
     deleteGroup,

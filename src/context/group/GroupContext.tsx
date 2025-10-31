@@ -4,9 +4,9 @@ import { createContext } from "react";
 export interface GroupContextType {
   getDropdownGroups: () => Promise<IdNameItem[]>;
   getGroups: () => Promise<Group[]>;
-  getGroup: (groupId: string) => Promise<Group | null>;
-  createGroup: (group: CreateGroupDTO) => Promise<void>;
-  updateGroup: (groupId: string, group: CreateGroupDTO) => Promise<void>;
+  getGroupById: (groupId: string) => Promise<Group | null>;
+  createGroup: (group: CreateGroupDTO) => Promise<Group | null>;
+  updateGroup: (groupId: string, group: CreateGroupDTO) => Promise<Group | null>;
   deleteGroup: (groupId: string) => Promise<void>;
 }
 
