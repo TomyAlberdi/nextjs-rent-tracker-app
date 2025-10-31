@@ -3,29 +3,28 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePropertyContext } from "@/context/property/usePropertyContext";
 import { Property } from "@/lib/interfaces";
-import { notFound } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-type PropertyProps = {
-  params: Promise<{ id: string }>;
-};
-
-const PropertyPage = ({ params }: PropertyProps) => {
+const PropertyPage = () => {
   const { getPropertyById } = usePropertyContext();
-  const { id } = use(params);
-
+  const { id } = useParams();
+  const router = useRouter();
   const [Property, setProperty] = useState<Property | null>(null);
   const [Loading, setLoading] = useState(false);
-  const [PropertyUpdated, setPropertyUpdated] = useState(false);
 
   useEffect(() => {
-    const loadProperty = async () => {
+    if (!id) return;
+    async function fetchProperty() {
       setLoading(true);
-      const data = await getPropertyById(id);
+      const data = await getPropertyById(id as string);
+      if (!data) {
+        router.push("/notFound");
+      }
       setProperty(data);
       setLoading(false);
-    };
-    loadProperty();
+    }
+    fetchProperty();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
@@ -41,9 +40,7 @@ const PropertyPage = ({ params }: PropertyProps) => {
     );
   }
 
-  if (!Loading && !Property) return notFound();
-
-  return <div>Property</div>;
+  return <div className="text-sidebar-">{Property?.name}</div>;
 };
 
 export default PropertyPage;

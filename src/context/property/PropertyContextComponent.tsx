@@ -3,6 +3,7 @@ import {
   PropertyContextType,
 } from "@/context/property/PropertyContext";
 import { CreatePropertyDTO } from "@/lib/interfaces";
+import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
 import { toast } from "sonner";
 
@@ -13,6 +14,8 @@ interface PropertyContextComponentProps {
 const PropertyContextComponent: React.FC<PropertyContextComponentProps> = ({
   children,
 }) => {
+  const router = useRouter();
+
   const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/property`;
 
   const getProperties = async () => {
@@ -45,6 +48,7 @@ const PropertyContextComponent: React.FC<PropertyContextComponentProps> = ({
     } catch (err) {
       console.error("Failed to fetch property", err);
       toast.error("Ocurrió un error al obtener la propiedad");
+      router.push("/notFound");
       return null;
     }
   };
@@ -58,12 +62,12 @@ const PropertyContextComponent: React.FC<PropertyContextComponentProps> = ({
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
       if (!response.ok) {
         toast.error("Ocurrió un error al crear la propiedad");
-        console.warn("Failed to create property:", data);
         return;
       }
+      const data = await response.json();
+      return data;
     } catch (err) {
       console.error("Failed to create property", err);
       toast.error("Ocurrió un error al crear la propiedad");
@@ -79,12 +83,12 @@ const PropertyContextComponent: React.FC<PropertyContextComponentProps> = ({
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
       if (!response.ok) {
         toast.error("Ocurrió un error al actualizar la propiedad");
-        console.warn("Failed to update property:", data);
         return;
       }
+      const data = await response.json();
+      return data;
     } catch (err) {
       console.error("Failed to update property", err);
       toast.error("Ocurrió un error al actualizar la propiedad");
