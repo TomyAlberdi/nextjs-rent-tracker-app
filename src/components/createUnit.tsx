@@ -28,7 +28,7 @@ import { useGroupContext } from "@/context/group/useGroupContext";
 import { useUnitContext } from "@/context/unit/useUnitContext";
 import { CreateUnitDTO, IdNameItem, Unit } from "@/lib/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CirclePlus, PencilLine } from "lucide-react";
+import { CirclePlus, HousePlus, PencilLine } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -116,7 +116,7 @@ const CreateUnit = ({
           </Button>
         ) : (
           <Button>
-            <CirclePlus />
+            <HousePlus />
             Crear Unidad
           </Button>
         )}
