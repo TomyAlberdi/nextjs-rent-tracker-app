@@ -16,6 +16,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
 import { Spinner } from "@/components/ui/spinner";
 import { useGroupContext } from "@/context/group/useGroupContext";
 import { CreateGroupDTO, Group } from "@/lib/interfaces";
@@ -90,10 +95,23 @@ const CreateGroup = ({
             Editar Grupo
           </Button>
         ) : (
-          <Button>
-            <Boxes />
-            Crear Grupo
-          </Button>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                size="lg"
+                className="bg-sidebar-primary text-sidebar-accent cursor-pointer rounded-xs"
+                onClick={() => setDrawerOpen(true)}
+              >
+                {/* TODO: adjust collapsed icon into a square */}
+                <div className="flex aspect-square size-8 items-center justify-center rounded-xs">
+                  <Boxes className="size-5" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight truncate">
+                  <span>Crear Grupo</span>
+                </div>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
         )}
       </DrawerTrigger>
       <DrawerContent
@@ -105,7 +123,7 @@ const CreateGroup = ({
             {defaultGroup ? "Editar" : "Crear"} Grupo
           </DrawerTitle>
           <DrawerDescription>
-            Crear un grupo para asociar 2 o más unidades.
+            Un grupo permite asociar 2 o más unidades.
           </DrawerDescription>
         </DrawerHeader>
         <div>

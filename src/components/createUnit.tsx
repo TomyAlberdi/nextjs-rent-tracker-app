@@ -34,6 +34,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
 
 interface CreateUnitProps {
   ReloadUnits: boolean;
@@ -118,10 +119,23 @@ const CreateUnit = ({
             Editar Unidad
           </Button>
         ) : (
-          <Button>
-            <Box />
-            Crear Unidad
-          </Button>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                size="lg"
+                className="bg-sidebar-primary text-sidebar-accent cursor-pointer rounded-xs"
+                onClick={() => setDrawerOpen(true)}
+              >
+                {/* TODO: adjust collapsed icon into a square */}
+                <div className="flex aspect-square size-8 items-center justify-center rounded-xs">
+                  <Box className="size-5" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight truncate">
+                  <span>Crear Unidad</span>
+                </div>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
         )}
       </DrawerTrigger>
       <DrawerContent
