@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerContent,
+  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -123,12 +124,15 @@ const CreateUnit = ({
       </DrawerTrigger>
       <DrawerContent
         aria-describedby={undefined}
-        className="text-sidebar-primary justify-center "
+        className="text-sidebar-primary justify-center"
       >
         <DrawerHeader>
           <DrawerTitle className="text-sidebar-primary text-2xl">
             {defaultUnit ? "Editar" : "Crear"} Unidad
           </DrawerTitle>
+          <DrawerDescription>
+            Una unidad permite agrupar gastos e ingresos.
+          </DrawerDescription>
         </DrawerHeader>
         <div>
           <Form {...form}>
