@@ -3,9 +3,10 @@
 import { CircleDollarSign } from "lucide-react";
 import * as React from "react";
 
+import CreateProperty from "@/components/createProperty";
 import { NavFooter } from "@/components/nav-footer";
 import { NavGroup } from "@/components/nav-group";
-import { NavIndividual } from "@/components/nav-individual";
+import { NavUnit } from "@/components/nav-unit";
 import {
   Sidebar,
   SidebarContent,
@@ -17,8 +18,12 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { useState } from "react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const [ReloadUnits, setReloadUnits] = useState(false);
+  const [ReloadGroups, setReloadGroups] = useState(false);
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -40,9 +45,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavGroup />
-        <NavIndividual />
+        <NavUnit ReloadUnits={ReloadUnits} />
       </SidebarContent>
       <SidebarFooter>
+        <CreateProperty
+          ReloadUnits={ReloadUnits}
+          setReloadUnits={setReloadUnits}
+        />
         <NavFooter />
       </SidebarFooter>
       <SidebarRail />

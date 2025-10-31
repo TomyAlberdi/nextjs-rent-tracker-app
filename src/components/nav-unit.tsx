@@ -1,12 +1,11 @@
 "use client";
 
-
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { usePropertyContext } from "@/context/property/usePropertyContext";
@@ -14,7 +13,11 @@ import { Property } from "@/lib/interfaces";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export function NavIndividual() {
+interface NavUnitProps {
+  ReloadUnits: boolean;
+}
+
+export function NavUnit({ ReloadUnits }: NavUnitProps) {
   const { getProperties } = usePropertyContext();
 
   const [properties, setProperties] = useState<Property[]>([]);
@@ -26,7 +29,7 @@ export function NavIndividual() {
       setIsLoading(false);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [ReloadUnits]);
 
   return (
     <SidebarGroup className="px-0">
@@ -40,7 +43,11 @@ export function NavIndividual() {
               ))
           : properties.map((property) => (
               <SidebarMenuItem key={property.id}>
-                <SidebarMenuButton asChild tooltip={property.name} className="rounded-xs h-9">
+                <SidebarMenuButton
+                  asChild
+                  tooltip={property.name}
+                  className="rounded-xs h-9"
+                >
                   <Link href={`/unit/${property.id}`}>
                     <span>{property.name}</span>
                   </Link>
