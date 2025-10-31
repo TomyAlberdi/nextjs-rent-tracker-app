@@ -73,7 +73,7 @@ export function NavGroup() {
                           {group.properties?.map((subItem) => (
                             <SidebarMenuSubItem key={subItem.name} className="h-9">
                               <SidebarMenuSubButton asChild className="rounded-xs h-full">
-                                <Link href={`/property/${subItem.id}`}>
+                                <Link href={`/unit/${subItem.id}`}>
                                   <span>{subItem.name}</span>
                                 </Link>
                               </SidebarMenuSubButton>

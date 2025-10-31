@@ -30,7 +30,7 @@ export function NavIndividual() {
 
   return (
     <SidebarGroup className="px-0">
-      <SidebarGroupLabel>Individuales</SidebarGroupLabel>
+      <SidebarGroupLabel>Unidades</SidebarGroupLabel>
       <SidebarMenu>
         {isLoading
           ? Array(3)
@@ -41,7 +41,7 @@ export function NavIndividual() {
           : properties.map((property) => (
               <SidebarMenuItem key={property.id}>
                 <SidebarMenuButton asChild tooltip={property.name} className="rounded-xs h-9">
-                  <Link href={`/property/${property.id}`}>
+                  <Link href={`/unit/${property.id}`}>
                     <span>{property.name}</span>
                   </Link>
                 </SidebarMenuButton>
