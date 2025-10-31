@@ -21,7 +21,6 @@ import { useTheme } from "next-themes";
 
 export function NavFooter() {
   const { setTheme, theme } = useTheme();
-  //TODO: Implement group and Unit creation dialogs and buttons
   return (
     <SidebarMenu>
       <SidebarMenuItem>
