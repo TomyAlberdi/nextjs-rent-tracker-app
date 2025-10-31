@@ -3,6 +3,7 @@
 import { CircleDollarSign } from "lucide-react";
 import * as React from "react";
 
+import CreateGroup from "@/components/createGroup";
 import CreateUnit from "@/components/createUnit";
 import { NavFooter } from "@/components/nav-footer";
 import { NavGroup } from "@/components/nav-group";
@@ -36,7 +37,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">Administración</span>
-                  <span className="truncate text-xs">Gastos</span>
+                  <span className="truncate text-xs">Gastos e Ingresos</span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -44,13 +45,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavGroup />
+        <NavGroup ReloadGroups={ReloadGroups} ReloadUnits={ReloadUnits} />
         <NavUnit ReloadUnits={ReloadUnits} />
       </SidebarContent>
       <SidebarFooter>
+        <CreateGroup
+          ReloadGroups={ReloadGroups}
+          setReloadGroups={setReloadGroups}
+        />
         <CreateUnit
           ReloadUnits={ReloadUnits}
           setReloadUnits={setReloadUnits}
+          ReloadGroups={ReloadGroups}
         />
         <NavFooter />
       </SidebarFooter>

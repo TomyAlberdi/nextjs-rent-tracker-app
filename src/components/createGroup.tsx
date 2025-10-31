@@ -1,4 +1,3 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -17,110 +16,83 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
 import { useGroupContext } from "@/context/group/useGroupContext";
-import { useUnitContext } from "@/context/unit/useUnitContext";
-import { CreateUnitDTO, IdNameItem, Unit } from "@/lib/interfaces";
+import { CreateGroupDTO, Group } from "@/lib/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, CirclePlus, PencilLine } from "lucide-react";
+import { Boxes, CirclePlus, PencilLine } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
-interface CreateUnitProps {
-  ReloadUnits: boolean;
-  setReloadUnits: React.Dispatch<React.SetStateAction<boolean>>;
+interface CreateGroupProps {
   ReloadGroups: boolean;
-  defaultUnit?: Unit;
+  setReloadGroups: React.Dispatch<React.SetStateAction<boolean>>;
+  defaultGroup?: Group;
 }
 
 const formSchema = z.object({
   name: z.string().min(1, "El nombre es obligatorio"),
   description: z.string().optional(),
-  groupId: z.string().nullable(),
 });
 
-const CreateUnit = ({
-  defaultUnit,
-  ReloadUnits,
-  setReloadUnits,
+const CreateGroup = ({
+  defaultGroup,
   ReloadGroups,
-}: CreateUnitProps) => {
+  setReloadGroups,
+}: CreateGroupProps) => {
   const router = useRouter();
-  const { getDropdownGroups } = useGroupContext();
-  const { createUnit, updateUnit } = useUnitContext();
+  const { createGroup, updateGroup } = useGroupContext();
   const [DrawerOpen, setDrawerOpen] = useState(false);
-  const [DropdownGroups, setDropdownGroups] = useState<IdNameItem[]>([]);
   const [Loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: defaultUnit?.name || "",
-      description: defaultUnit?.description || "",
-      groupId: defaultUnit?.groupId || null,
+      name: defaultGroup?.name || "",
+      description: defaultGroup?.description || "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
-    const data: CreateUnitDTO = {
+    const data: CreateGroupDTO = {
       name: values.name,
       description: values.description || null,
-      type:
-        values.groupId == undefined || values.groupId == "none"
-          ? "INDIVIDUAL"
-          : "GROUPED",
-      groupId:
-        values.groupId == undefined || values.groupId == "none"
-          ? null
-          : values.groupId,
     };
-    if (defaultUnit) {
-      const updatedUnit = await updateUnit(defaultUnit.id, data);
-      if (updatedUnit) {
+    if (defaultGroup) {
+      const updatedGroup = await updateGroup(defaultGroup.id, data);
+      if (updatedGroup) {
         form.reset();
-        setReloadUnits(!ReloadUnits);
+        setReloadGroups(!ReloadGroups);
         setDrawerOpen(false);
-        router.push(`/unit/${updatedUnit.id}`);
+        router.push(`/group/${updatedGroup.id}`);
       }
     } else {
-      const createdUnit = await createUnit(data);
-      if (createdUnit) {
+      const createdGroup = await createGroup(data);
+      if (createdGroup) {
         form.reset();
-        setReloadUnits(!ReloadUnits);
+        setReloadGroups(!ReloadGroups);
         setDrawerOpen(false);
-        router.push(`/unit/${createdUnit.id}`);
+        router.push(`/group/${createdGroup.id}`);
       }
     }
     setLoading(false);
   };
 
-  useEffect(() => {
-    getDropdownGroups().then((data) => setDropdownGroups(data));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ReloadGroups]);
-
   return (
     <Drawer direction="right" open={DrawerOpen} onOpenChange={setDrawerOpen}>
       <DrawerTrigger asChild>
-        {defaultUnit ? (
+        {defaultGroup ? (
           <Button variant={"secondary"} className="w-full">
             <PencilLine />
-            Editar Unidad
+            Editar Grupo
           </Button>
         ) : (
           <Button>
-            <Box />
-            Crear Unidad
+            <Boxes />
+            Crear Grupo
           </Button>
         )}
       </DrawerTrigger>
@@ -130,10 +102,10 @@ const CreateUnit = ({
       >
         <DrawerHeader>
           <DrawerTitle className="text-sidebar-primary text-2xl">
-            {defaultUnit ? "Editar" : "Crear"} Unidad
+            {defaultGroup ? "Editar" : "Crear"} Grupo
           </DrawerTitle>
           <DrawerDescription>
-            Una unidad permite agrupar gastos e ingresos.
+            Crear un grupo para asociar 2 o más unidades.
           </DrawerDescription>
         </DrawerHeader>
         <div>
@@ -168,36 +140,8 @@ const CreateUnit = ({
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="groupId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Grupo</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={defaultUnit?.groupId || undefined}
-                      disabled={DropdownGroups.length === 0}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleccione un grupo (opcional)" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {DropdownGroups.map((group) => (
-                          <SelectItem key={group.id} value={group.id}>
-                            {group.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button disabled={Loading}>
-                {defaultUnit ? (
+              <Button type="submit" disabled={Loading}>
+                {defaultGroup ? (
                   <>
                     {Loading ? <Spinner /> : <PencilLine />}
                     Editar
@@ -217,4 +161,4 @@ const CreateUnit = ({
   );
 };
 
-export default CreateUnit;
+export default CreateGroup;

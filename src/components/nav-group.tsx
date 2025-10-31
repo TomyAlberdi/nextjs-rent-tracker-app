@@ -24,7 +24,12 @@ import { Group } from "@/lib/interfaces";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export function NavGroup() {
+interface NavGroupProps {
+  ReloadGroups: boolean;
+  ReloadUnits: boolean;
+}
+
+export function NavGroup({ ReloadGroups, ReloadUnits }: NavGroupProps) {
   const { getGroups } = useGroupContext();
 
   const [groups, setGroups] = useState<Group[]>([]);
@@ -36,7 +41,7 @@ export function NavGroup() {
       setIsLoading(false);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [ReloadGroups, ReloadUnits]);
 
   return (
     <SidebarGroup className="px-0">
@@ -55,7 +60,11 @@ export function NavGroup() {
                 defaultOpen={index === 0 ? true : false}
               >
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild tooltip={group.name} className="rounded-xs h-9">
+                  <SidebarMenuButton
+                    asChild
+                    tooltip={group.name}
+                    className="rounded-xs h-9"
+                  >
                     <Link href={`/group/${group.id}`}>
                       <span>{group.name}</span>
                     </Link>
@@ -71,8 +80,14 @@ export function NavGroup() {
                       <CollapsibleContent>
                         <SidebarMenuSub className="gap-0">
                           {group.properties?.map((subItem) => (
-                            <SidebarMenuSubItem key={subItem.name} className="h-9">
-                              <SidebarMenuSubButton asChild className="rounded-xs h-full">
+                            <SidebarMenuSubItem
+                              key={subItem.name}
+                              className="h-9"
+                            >
+                              <SidebarMenuSubButton
+                                asChild
+                                className="rounded-xs h-full"
+                              >
                                 <Link href={`/unit/${subItem.id}`}>
                                   <span>{subItem.name}</span>
                                 </Link>
