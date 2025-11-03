@@ -38,7 +38,7 @@ export interface Record {
   year: number;
   transactions: Transaction[];
   totalIncome: number;
-  totalExpenses: number;
+  totalExpense: number;
   netIncome: number;
   // internal fields (not stored in database)
   monthName?: string | null;

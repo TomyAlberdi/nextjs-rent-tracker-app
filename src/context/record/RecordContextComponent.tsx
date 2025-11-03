@@ -1,4 +1,7 @@
-import { RecordContext, RecordContextType } from "@/context/record/RecordContext";
+import {
+  RecordContext,
+  RecordContextType,
+} from "@/context/record/RecordContext";
 import type { CreateRecordDTO, UnitType } from "@/lib/interfaces";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
@@ -10,15 +13,11 @@ interface RecordContextComponentProps {
 const RecordContextComponent: React.FC<RecordContextComponentProps> = ({
   children,
 }) => {
-  const BASE_URL = process.env.BASE_URL + "/record";
+  const BASE_URL = `${process.env.NEXT_PUBLIC_API_URL}/record`;
 
-  const getRecords = async (
-    type: UnitType,
-    parentId: string,
-    year: number
-  ) => {
+  const getRecords = async (type: UnitType, parentId: string, year: number) => {
     try {
-      const url = `${BASE_URL}/record?type=${type}&parentId=${parentId}&year=${year}`;
+      const url = `${BASE_URL}?type=${type}&parentId=${parentId}&year=${year}`;
       const res = await fetch(url);
       if (!res.ok) {
         console.warn("No records found: ", res);
@@ -37,7 +36,7 @@ const RecordContextComponent: React.FC<RecordContextComponentProps> = ({
 
   const saveRecord = async (record: CreateRecordDTO) => {
     try {
-      const response = await fetch(`${BASE_URL}/record`, {
+      const response = await fetch(`${BASE_URL}`, {
         method: "POST",
         body: JSON.stringify(record),
         headers: {
@@ -59,7 +58,7 @@ const RecordContextComponent: React.FC<RecordContextComponentProps> = ({
 
   const deleteRecord = async (id: string) => {
     try {
-      const response = await fetch(`${BASE_URL}/record/${id}`, {
+      const response = await fetch(`${BASE_URL}/${id}`, {
         method: "DELETE",
       });
       const data = await response.json();
@@ -77,7 +76,7 @@ const RecordContextComponent: React.FC<RecordContextComponentProps> = ({
 
   const getMonthlySummary = async (year: number) => {
     try {
-      const url = `${BASE_URL}/record/MonthlySummary/${year}`;
+      const url = `${BASE_URL}/MonthlySummary/${year}`;
       const res = await fetch(url);
       if (!res.ok) {
         console.warn("No records found: ", res);
@@ -96,7 +95,7 @@ const RecordContextComponent: React.FC<RecordContextComponentProps> = ({
 
   const getParentSummary = async (year: number, parentType: UnitType) => {
     try {
-      const url = `${BASE_URL}/record/ParentSummary/${year}?type=${parentType}`;
+      const url = `${BASE_URL}/ParentSummary/${year}?type=${parentType}`;
       const res = await fetch(url);
       if (!res.ok) {
         console.warn("No records found: ", res);
