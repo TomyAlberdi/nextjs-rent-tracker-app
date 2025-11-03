@@ -1,12 +1,11 @@
 "use client";
-import { Skeleton } from "@/components/ui/skeleton";
+import LoadingMainData from "@/components/loadingMainData";
 import { useGroupContext } from "@/context/group/useGroupContext";
 import { Group } from "@/lib/interfaces";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const GroupPage = () => {
-
   const { getGroupById } = useGroupContext();
   const { id } = useParams();
   const router = useRouter();
@@ -29,22 +28,10 @@ const GroupPage = () => {
   }, [id]);
 
   if (Loading) {
-    return (
-      <div className="h-full flex justify-start items-center gap-4 p-4 pt-0">
-        <div className="h-full w-1/4 flex flex-col gap-4">
-          <Skeleton className="h-1/2 w-full" />
-          <Skeleton className="h-1/2 w-full" />
-        </div>
-        <Skeleton className="h-full w-3/4" />
-      </div>
-    );
+    return <LoadingMainData />;
   }
 
-  return (
-    <div>
-      {Group?.name}
-    </div>
-  )
-}
+  return <div>{Group?.name}</div>;
+};
 
 export default GroupPage;
