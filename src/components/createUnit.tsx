@@ -29,7 +29,7 @@ import { useGroupContext } from "@/context/group/useGroupContext";
 import { useUnitContext } from "@/context/unit/useUnitContext";
 import { CreateUnitDTO, IdNameItem, Unit } from "@/lib/interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, CirclePlus, PencilLine } from "lucide-react";
+import { Box, CirclePlus, PencilLine, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -123,16 +123,16 @@ const CreateUnit = ({
             <SidebarMenuItem>
               <SidebarMenuButton
                 size="lg"
-                className="bg-sidebar-primary text-sidebar-accent cursor-pointer rounded-xs"
+                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer rounded-xs"
                 onClick={() => setDrawerOpen(true)}
               >
-                {/* TODO: adjust collapsed icon into a square */}
-                <div className="flex aspect-square size-8 items-center justify-center rounded-xs">
+                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-xs">
                   <Box className="size-5" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight truncate">
                   <span>Crear Unidad</span>
                 </div>
+                <Plus className="ml-auto size-4" />
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
