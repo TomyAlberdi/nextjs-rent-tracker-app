@@ -10,6 +10,8 @@ export interface UnitContextType {
     Unit: CreateUnitDTO
   ) => Promise<Unit | null>;
   deleteUnit: (id: string) => Promise<void>;
+  ReloadUnits: boolean;
+  setReloadUnits: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const UnitContext = createContext<UnitContextType | null>(null);

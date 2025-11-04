@@ -37,9 +37,6 @@ import z from "zod";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "./ui/sidebar";
 
 interface CreateUnitProps {
-  ReloadUnits: boolean;
-  setReloadUnits: React.Dispatch<React.SetStateAction<boolean>>;
-  ReloadGroups: boolean;
   defaultUnit?: Unit;
 }
 
@@ -49,15 +46,11 @@ const formSchema = z.object({
   groupId: z.string().nullable(),
 });
 
-const CreateUnit = ({
-  defaultUnit,
-  ReloadUnits,
-  setReloadUnits,
-  ReloadGroups,
-}: CreateUnitProps) => {
+const CreateUnit = ({ defaultUnit }: CreateUnitProps) => {
   const router = useRouter();
-  const { getDropdownGroups } = useGroupContext();
-  const { createUnit, updateUnit } = useUnitContext();
+  const { getDropdownGroups, ReloadGroups } = useGroupContext();
+  const { createUnit, updateUnit, ReloadUnits, setReloadUnits } =
+    useUnitContext();
   const [DrawerOpen, setDrawerOpen] = useState(false);
   const [DropdownGroups, setDropdownGroups] = useState<IdNameItem[]>([]);
   const [Loading, setLoading] = useState(false);

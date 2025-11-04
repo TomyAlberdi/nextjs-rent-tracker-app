@@ -3,7 +3,7 @@ import {
   type GroupContextType,
 } from "@/context/group/GroupContext";
 import type { CreateGroupDTO } from "@/lib/interfaces";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { toast } from "sonner";
 
 interface GroupContextComponentProps {
@@ -127,6 +127,8 @@ const GroupContextComponent: React.FC<GroupContextComponentProps> = ({
     }
   };
 
+  const [ReloadGroups, setReloadGroups] = useState(false);
+
   const exportData: GroupContextType = {
     getDropdownGroups,
     getGroups,
@@ -134,6 +136,8 @@ const GroupContextComponent: React.FC<GroupContextComponentProps> = ({
     createGroup,
     updateGroup,
     deleteGroup,
+    ReloadGroups,
+    setReloadGroups,
   };
 
   return (

@@ -14,10 +14,16 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useRecordContext } from "@/context/record/useRecordContext";
 import { Record, Transaction, UnitType } from "@/lib/interfaces";
 import { getMonthName } from "@/lib/utils";
+import { LineChart } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
@@ -128,9 +134,14 @@ const RecordChart = ({
   return (
     <>
       <Card className="rounded-md bg-inherit h-full border-none pb-2">
-        <CardHeader>
-          <CardTitle>{parentName}</CardTitle>
-          <CardDescription>{year}</CardDescription>
+        <CardHeader className="flex items-center">
+          <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-xs">
+            <LineChart />
+          </div>
+          <span>
+            <CardTitle>{parentName}</CardTitle>
+            <CardDescription>{year}</CardDescription>
+          </span>
         </CardHeader>
         <CardContent className="h-full">
           <ChartContainer config={chartConfig} className="h-full w-full">
@@ -182,7 +193,7 @@ const RecordChart = ({
         >
           <DialogHeader className="w-full flex items-center">
             <DialogTitle className="alternate-font text-xl w-full text-center pt-4">
-              Registro de ingresos para la propiedad <br />
+              Registro de ingresos para la unidad <br />
               <Button
                 className="w-full mt-4 cursor-default"
                 variant={"outline"}

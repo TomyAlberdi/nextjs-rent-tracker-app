@@ -32,8 +32,6 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 
 interface CreateGroupProps {
-  ReloadGroups: boolean;
-  setReloadGroups: React.Dispatch<React.SetStateAction<boolean>>;
   defaultGroup?: Group;
 }
 
@@ -42,13 +40,10 @@ const formSchema = z.object({
   description: z.string().optional(),
 });
 
-const CreateGroup = ({
-  defaultGroup,
-  ReloadGroups,
-  setReloadGroups,
-}: CreateGroupProps) => {
+const CreateGroup = ({ defaultGroup }: CreateGroupProps) => {
   const router = useRouter();
-  const { createGroup, updateGroup } = useGroupContext();
+  const { createGroup, updateGroup, ReloadGroups, setReloadGroups } =
+    useGroupContext();
   const [DrawerOpen, setDrawerOpen] = useState(false);
   const [Loading, setLoading] = useState(false);
 

@@ -1,6 +1,7 @@
 "use client";
 
 import LoadingMainData from "@/components/loadingMainData";
+import ObjectInfo from "@/components/objectInfo";
 import RecordChart from "@/components/recordChart";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -46,7 +47,7 @@ const UnitPage = () => {
   }
 
   return (
-    <div className="h-full flex justify-start items-center p-2 pt-0">
+    <div className="h-full flex justify-start items-center">
       <div className="h-full w-3/4 flex flex-col gap-2 relative border-none">
         <RecordChart
           year={RecordDataYear}
@@ -64,6 +65,7 @@ const UnitPage = () => {
           </Button>
         </Card>
       </div>
+      {Unit && <ObjectInfo object={Unit} />}
     </div>
   );
 };

@@ -18,12 +18,13 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { useGroupContext } from "@/context/group/useGroupContext";
+import { useUnitContext } from "@/context/unit/useUnitContext";
 import Link from "next/link";
-import { useState } from "react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const [ReloadUnits, setReloadUnits] = useState(false);
-  const [ReloadGroups, setReloadGroups] = useState(false);
+  const { ReloadUnits } = useUnitContext();
+  const { ReloadGroups } = useGroupContext();
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -49,15 +50,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavUnit ReloadUnits={ReloadUnits} />
       </SidebarContent>
       <SidebarFooter>
-        <CreateGroup
-          ReloadGroups={ReloadGroups}
-          setReloadGroups={setReloadGroups}
-        />
-        <CreateUnit
-          ReloadUnits={ReloadUnits}
-          setReloadUnits={setReloadUnits}
-          ReloadGroups={ReloadGroups}
-        />
+        <CreateGroup />
+        <CreateUnit />
         <NavFooter />
       </SidebarFooter>
       <SidebarRail />

@@ -8,6 +8,8 @@ export interface GroupContextType {
   createGroup: (group: CreateGroupDTO) => Promise<Group | null>;
   updateGroup: (groupId: string, group: CreateGroupDTO) => Promise<Group | null>;
   deleteGroup: (groupId: string) => Promise<void>;
+  ReloadGroups: boolean;
+  setReloadGroups: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const GroupContext = createContext<GroupContextType | null>(null);

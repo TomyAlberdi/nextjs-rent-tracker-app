@@ -1,8 +1,7 @@
-
 import { UnitContext, UnitContextType } from "@/context/unit/UnitContext";
 import { CreateUnitDTO } from "@/lib/interfaces";
 import { useRouter } from "next/navigation";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { toast } from "sonner";
 
 interface UnitContextComponentProps {
@@ -108,18 +107,20 @@ const UnitContextComponent: React.FC<UnitContextComponentProps> = ({
     }
   };
 
+  const [ReloadUnits, setReloadUnits] = useState(false);
+
   const exportData: UnitContextType = {
     getUnits,
     getUnitById,
     createUnit,
     updateUnit,
     deleteUnit,
+    ReloadUnits,
+    setReloadUnits,
   };
 
   return (
-    <UnitContext.Provider value={exportData}>
-      {children}
-    </UnitContext.Provider>
+    <UnitContext.Provider value={exportData}>{children}</UnitContext.Provider>
   );
 };
 
