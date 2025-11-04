@@ -1,5 +1,6 @@
 "use client";
 
+import RecordData from "@/components/recordData";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -189,6 +190,7 @@ const RecordChart = ({
       <Dialog open={DialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent
           aria-describedby={undefined}
+          //TODO: style dialog
           className="flex flex-col justify-start items-center pb-4 max-h-[80vh] min-h-[300px] overflow-y-scroll custom-sidebar bg-popover text-sidebar-primary rounded-xs"
         >
           <DialogHeader className="w-full flex items-center">
@@ -203,8 +205,7 @@ const RecordChart = ({
             </DialogTitle>
           </DialogHeader>
           {
-            //SelectedRecord && <AddRecord record={SelectedRecord} />
-            //TODO: Implement record transactions on dialog
+            SelectedRecord && <RecordData record={SelectedRecord} />
           }
         </DialogContent>
       </Dialog>
