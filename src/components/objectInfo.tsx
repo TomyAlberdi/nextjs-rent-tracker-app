@@ -69,11 +69,25 @@ const ObjectInfo = ({ object }: objectInfoProps) => {
         </CardTitle>
         <CardDescription>{object.description}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2">
-        {/* TODO: add properties component to group info */}
-        {"properties" in object && <span>propiedades</span>}
-      </CardContent>
-      <CardContent className="flex flex-col gap-2 border-y py-2">
+      {"properties" in object && (
+        <CardContent className="flex flex-col gap-3 border-t pt-2">
+          <CardTitle className="text-xl">
+            Unidades
+          </CardTitle>
+          <div className="flex flex-col gap-2">
+            {object.properties.map((unit, index) => (
+              <Button
+                key={index}
+                onClick={() => router.push(`/unit/${unit.id}`)}
+                variant={"outline"}
+              >
+                {unit.name}
+              </Button>
+            ))}
+          </div>
+        </CardContent>
+      )}
+      <CardContent className="flex flex-col gap-2 border-y pt-2 pb-4">
         <span className="text-xl">Administración</span>
         {"properties" in object ? (
           <>
@@ -92,6 +106,10 @@ const ObjectInfo = ({ object }: objectInfoProps) => {
             </Button>
           </>
         )}
+      </CardContent>
+      <CardContent className="flex flex-col gap-2 border-b pt-2 pb-4">
+        <span className="text-xl">Análisis</span>
+        {/* TODO: Create and add analysis */}
       </CardContent>
     </div>
   );
