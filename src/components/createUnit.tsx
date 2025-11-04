@@ -107,7 +107,7 @@ const CreateUnit = ({ defaultUnit }: CreateUnitProps) => {
     <Drawer direction="right" open={DrawerOpen} onOpenChange={setDrawerOpen}>
       <DrawerTrigger asChild>
         {defaultUnit ? (
-          <Button variant={"secondary"} className="w-full">
+          <Button variant={"secondary"} className="w-full bg-sidebar-primary text-popover hover:bg-sidebar-primary/90">
             <PencilLine />
             Editar Unidad
           </Button>

@@ -85,7 +85,7 @@ const CreateGroup = ({ defaultGroup }: CreateGroupProps) => {
     <Drawer direction="right" open={DrawerOpen} onOpenChange={setDrawerOpen}>
       <DrawerTrigger asChild>
         {defaultGroup ? (
-          <Button variant={"secondary"} className="w-full">
+          <Button variant={"secondary"} className="w-full bg-sidebar-primary text-popover hover:bg-sidebar-primary/90">
             <PencilLine />
             Editar Grupo
           </Button>

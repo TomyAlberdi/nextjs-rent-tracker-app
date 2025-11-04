@@ -78,7 +78,6 @@ const ObjectInfo = ({ object }: objectInfoProps) => {
         {"properties" in object ? (
           <>
             <CreateGroup defaultGroup={object} />
-            {/* TODO: style delete button */}
             <Button onClick={onDeleteClick} disabled={LoadingDelete}>
               <Trash2 />
               Eliminar grupo
