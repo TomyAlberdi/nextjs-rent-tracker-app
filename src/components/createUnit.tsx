@@ -187,7 +187,7 @@ const CreateUnit = ({ defaultUnit }: CreateUnitProps) => {
                       disabled={DropdownGroups.length === 0}
                     >
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="w-full">
                           <SelectValue placeholder="Seleccione un grupo (opcional)" />
                         </SelectTrigger>
                       </FormControl>
