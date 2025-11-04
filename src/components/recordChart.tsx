@@ -193,7 +193,7 @@ const RecordChart = ({
         >
           <DialogHeader className="w-full flex items-center">
             <DialogTitle className="alternate-font text-xl w-full text-center pt-4">
-              Registro de ingresos para la unidad <br />
+              Registro de ingresos para {parentType === "INDIVIDUAL" ? "la unidad" : "el grupo"} <br />
               <Button
                 className="w-full mt-4 cursor-default"
                 variant={"outline"}
@@ -204,6 +204,7 @@ const RecordChart = ({
           </DialogHeader>
           {
             //SelectedRecord && <AddRecord record={SelectedRecord} />
+            //TODO: Implement record transactions on dialog
           }
         </DialogContent>
       </Dialog>

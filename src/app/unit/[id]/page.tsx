@@ -1,5 +1,4 @@
 "use client";
-
 import LoadingMainData from "@/components/loadingMainData";
 import ObjectInfo from "@/components/objectInfo";
 import RecordChart from "@/components/recordChart";
