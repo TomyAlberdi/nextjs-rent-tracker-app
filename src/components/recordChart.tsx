@@ -63,6 +63,7 @@ const RecordChart = ({
   const [DialogOpen, setDialogOpen] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
   const [Records, setRecords] = useState<Record[]>([]);
+  const [ReloadRecords, setReloadRecords] = useState(false);
   const [SelectedRecord, setSelectedRecord] = useState<Record | null>(null);
 
   const fillRecords = useCallback(
@@ -110,7 +111,7 @@ const RecordChart = ({
     };
     fetchPropertyRecords();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [parentId, year]);
+  }, [parentId, year, ReloadRecords]);
 
   useEffect(() => {
     const selectedRecord = Records.find((r) => r.month === selectedMonth);
@@ -190,12 +191,12 @@ const RecordChart = ({
       <Dialog open={DialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent
           aria-describedby={undefined}
-          //TODO: style dialog
-          className="flex flex-col justify-start items-center pb-4 max-h-[80vh] min-h-[300px] overflow-y-scroll custom-sidebar bg-popover text-sidebar-primary rounded-xs"
+          className="flex flex-col justify-start items-center pb-4 max-h-[80vh] min-h-[300px] overflow-y-scroll custom-sidebar bg-popover text-sidebar-primary rounded-xs min-w-[40vw] w-auto"
         >
           <DialogHeader className="w-full flex items-center">
             <DialogTitle className="alternate-font text-xl w-full text-center pt-4">
-              Registro de ingresos para {parentType === "INDIVIDUAL" ? "la unidad" : "el grupo"} <br />
+              Registro de ingresos para{" "}
+              {parentType === "INDIVIDUAL" ? "la unidad" : "el grupo"} <br />
               <Button
                 className="w-full mt-4 cursor-default"
                 variant={"outline"}
@@ -204,9 +205,13 @@ const RecordChart = ({
               </Button>
             </DialogTitle>
           </DialogHeader>
-          {
-            SelectedRecord && <RecordData record={SelectedRecord} />
-          }
+          {SelectedRecord && (
+            <RecordData
+              record={SelectedRecord}
+              reloadRecords={ReloadRecords}
+              setReloadRecords={setReloadRecords}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </>

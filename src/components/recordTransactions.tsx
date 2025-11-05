@@ -58,19 +58,19 @@ const RecordTransactions = ({
   };
 
   return (
-    <div className="w-full bg-secondary text-white text-center p-2 rounded-md flex flex-col justify-center items-center gap-2">
+    <div className="w-full bg-popover border text-white text-center p-2 rounded-md flex flex-col justify-center items-center gap-2">
       <h2 className="alternate-font">
         {Record.transactions.length === 0
           ? "No hay transacciones registradas."
           : "Transacciones Registradas"}
       </h2>
-      <Table>
+      <Table className="bg-popover">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-1/12">Tipo</TableHead>
-            <TableHead className="w-6/12">Información</TableHead>
-            <TableHead className="w-4/12 text-center">Monto</TableHead>
-            <TableHead className="w-1/12 text-center">Acciones</TableHead>
+            <TableHead className="w-1/12 text-sidebar-primary">Tipo</TableHead>
+            <TableHead className="w-6/12 text-sidebar-primary">Información</TableHead>
+            <TableHead className="w-4/12 text-center text-sidebar-primary">Monto</TableHead>
+            <TableHead className="w-1/12 text-center text-sidebar-primary">Acciones</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

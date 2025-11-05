@@ -16,9 +16,15 @@ import { toast } from "sonner";
 
 interface RecordDataProps {
   record: Record;
+  reloadRecords: boolean;
+  setReloadRecords: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const RecordData = ({ record }: RecordDataProps) => {
+const RecordData = ({
+  record,
+  reloadRecords,
+  setReloadRecords,
+}: RecordDataProps) => {
   const { saveRecord, deleteRecord } = useRecordContext();
 
   const [Editing, setEditing] = useState(false);
@@ -81,7 +87,7 @@ const RecordData = ({ record }: RecordDataProps) => {
     const transactionsWithoutId = checkRecord(Record);
     if (transactionsWithoutId) {
       saveRecord(transactionsWithoutId).finally(() => {
-        window.location.reload();
+        setReloadRecords(!reloadRecords);
       });
     }
   };
@@ -104,7 +110,7 @@ const RecordData = ({ record }: RecordDataProps) => {
     <div className="w-full flex justify-center items-center">
       <div className="flex flex-col gap-4 w-full">
         <div className="flex justify-center items-center gap-4 w-full">
-          <article className="w-full">
+          <article className="w-1/2">
             <span>Año</span>
             <Select
               onValueChange={(value) =>
@@ -127,7 +133,7 @@ const RecordData = ({ record }: RecordDataProps) => {
               </SelectContent>
             </Select>
           </article>
-          <article className="w-full">
+          <article className="w-1/2">
             <span>Mes</span>
             <Select
               onValueChange={(value) =>
