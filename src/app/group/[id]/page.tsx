@@ -11,7 +11,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const GroupPage = () => {
-  const { getGroupById } = useGroupContext();
+  const { getGroupById, ReloadGroups } = useGroupContext();
   const { id } = useParams();
   const router = useRouter();
   const [Group, setGroup] = useState<Group | null>(null);
@@ -31,7 +31,7 @@ const GroupPage = () => {
     }
     fetchGroup();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, ReloadGroups]);
 
   const handlePreviousYear = () => {
     setRecordDataYear(RecordDataYear - 1);

@@ -11,7 +11,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const UnitPage = () => {
-  const { getUnitById } = useUnitContext();
+  const { getUnitById, ReloadUnits } = useUnitContext();
   const { id } = useParams();
   const router = useRouter();
   const [Unit, setUnit] = useState<Unit | null>(null);
@@ -31,7 +31,7 @@ const UnitPage = () => {
     }
     fetchUnit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, ReloadUnits]);
 
   const handlePreviousYear = () => {
     setRecordDataYear(RecordDataYear - 1);
