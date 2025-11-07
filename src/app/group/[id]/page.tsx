@@ -64,7 +64,7 @@ const GroupPage = () => {
           </Button>
         </Card>
       </div>
-      {Group && <ObjectInfo object={Group} />}
+      {Group && <ObjectInfo object={Group} parentType={"GROUPED"} />}
     </div>
   );
 };

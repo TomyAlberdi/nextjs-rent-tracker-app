@@ -64,7 +64,7 @@ const UnitPage = () => {
           </Button>
         </Card>
       </div>
-      {Unit && <ObjectInfo object={Unit} />}
+      {Unit && <ObjectInfo object={Unit} parentType={"INDIVIDUAL"} />}
     </div>
   );
 };

@@ -35,7 +35,7 @@ export function NavUnit({ ReloadUnits }: NavUnitProps) {
     <SidebarGroup className="px-0">
       <SidebarGroupLabel>Unidades</SidebarGroupLabel>
       <SidebarMenu>
-        {!isLoading
+        {isLoading
           ? Array(3)
               .fill(null)
               .map((_, index) => (

@@ -1,5 +1,6 @@
 import CreateGroup from "@/components/createGroup";
 import CreateUnit from "@/components/createUnit";
+import ObjectAnalytics from "@/components/objectAnalytics";
 import { Button } from "@/components/ui/button";
 import {
   CardContent,
@@ -9,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { useGroupContext } from "@/context/group/useGroupContext";
 import { useUnitContext } from "@/context/unit/useUnitContext";
-import { Group, Unit } from "@/lib/interfaces";
+import { Group, Unit, UnitType } from "@/lib/interfaces";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -17,9 +18,10 @@ import { toast } from "sonner";
 
 interface objectInfoProps {
   object: Unit | Group;
+  parentType: UnitType;
 }
 
-const ObjectInfo = ({ object }: objectInfoProps) => {
+const ObjectInfo = ({ object, parentType }: objectInfoProps) => {
   const router = useRouter();
   const { deleteUnit, ReloadUnits, setReloadUnits } = useUnitContext();
   const { deleteGroup, ReloadGroups, setReloadGroups } = useGroupContext();
@@ -71,9 +73,7 @@ const ObjectInfo = ({ object }: objectInfoProps) => {
       </CardHeader>
       {"properties" in object && (
         <CardContent className="flex flex-col gap-3 border-t pt-2">
-          <CardTitle className="text-xl">
-            Unidades
-          </CardTitle>
+          <CardTitle className="text-xl">Unidades</CardTitle>
           <div className="flex flex-col gap-2">
             {object.properties.map((unit, index) => (
               <Button
@@ -107,10 +107,7 @@ const ObjectInfo = ({ object }: objectInfoProps) => {
           </>
         )}
       </CardContent>
-      <CardContent className="flex flex-col gap-2 border-b pt-2 pb-4">
-        <span className="text-xl">Análisis</span>
-        {/* TODO: Create and add analysis */}
-      </CardContent>
+      <ObjectAnalytics object={object} parentType={parentType} />
     </div>
   );
 };
