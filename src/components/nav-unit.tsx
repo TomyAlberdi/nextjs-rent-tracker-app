@@ -35,11 +35,11 @@ export function NavUnit({ ReloadUnits }: NavUnitProps) {
     <SidebarGroup className="px-0">
       <SidebarGroupLabel>Unidades</SidebarGroupLabel>
       <SidebarMenu>
-        {isLoading
+        {!isLoading
           ? Array(3)
               .fill(null)
               .map((_, index) => (
-                <Skeleton key={index} className="h-4 w-full" />
+                <Skeleton key={index} className="rounded-xs h-9" />
               ))
           : properties.map((Unit) => (
               <SidebarMenuItem key={Unit.id}>

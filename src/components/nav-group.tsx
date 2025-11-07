@@ -51,7 +51,7 @@ export function NavGroup({ ReloadGroups, ReloadUnits }: NavGroupProps) {
           ? Array(3)
               .fill(null)
               .map((_, index) => (
-                <Skeleton key={index} className="h-4 w-full" />
+                <Skeleton key={index} className="rounded-xs h-9" />
               ))
           : groups.map((group, index) => (
               <Collapsible
