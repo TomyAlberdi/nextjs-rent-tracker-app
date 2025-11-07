@@ -1,11 +1,16 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { Spinner } from "@/components/ui/spinner";
 import { useRecordContext } from "@/context/record/useRecordContext";
 import { ParentSummaryRecordDTO, UnitType } from "@/lib/interfaces";
 import { getFillColor } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { Pie, PieChart } from "recharts";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart";
 
 interface ObjectGraphProps {
   type: UnitType;
@@ -24,6 +29,7 @@ const ObjectGraph = ({ type, year }: ObjectGraphProps) => {
   const router = useRouter();
 
   const [ParentData, setParentData] = useState<ParentSummaryRecordDTO[]>([]);
+  const [Loading, setLoading] = useState(false);
 
   const fillParentData = useCallback((data: ParentSummaryRecordDTO[]) => {
     return data.map((record, index) => {
@@ -35,12 +41,13 @@ const ObjectGraph = ({ type, year }: ObjectGraphProps) => {
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     const fetchParentSummary = async () => {
       const data = await getParentSummary(year, type);
       const filledData = fillParentData(data);
       setParentData(filledData);
     };
-    fetchParentSummary();
+    fetchParentSummary().then(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [year, type]);
 
@@ -90,21 +97,25 @@ const ObjectGraph = ({ type, year }: ObjectGraphProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent className="h-full flex justify-center items-center">
-        <ChartContainer config={ChartConfig} className="h-full">
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={ParentData}
-              dataKey="netIncome"
-              nameKey="parentName"
-              onClick={handlePieClick}
-              className="cursor-pointer"
-            />
-          </PieChart>
-        </ChartContainer>
+        {Loading ? (
+          <Spinner className="size-20" />
+        ) : (
+          <ChartContainer config={ChartConfig} className="h-full">
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
+                data={ParentData}
+                dataKey="netIncome"
+                nameKey="parentName"
+                onClick={handlePieClick}
+                className="cursor-pointer"
+              />
+            </PieChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
   );
