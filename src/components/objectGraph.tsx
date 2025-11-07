@@ -81,9 +81,8 @@ const ObjectGraph = ({ type, year }: ObjectGraphProps) => {
     [router, type]
   );
 
-  //TODO: Update records parentName when unit or group is updated
   return (
-    <Card className="w-full h-1/2">
+    <Card className="w-full h-1/2 rounded-md bg-popover">
       <CardHeader>
         <CardTitle className="text-xl">
           Ingresos Anuales Netos por{" "}
