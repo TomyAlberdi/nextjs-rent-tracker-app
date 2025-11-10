@@ -45,12 +45,21 @@ export function getFillColor(index: number) {
 }
 
 export function getMonthlyTrend(records: Record[]) {
+  if (records.length === 0 || records.length === 1) return 0;
+  const currentMonth = records[records.length - 1].netIncome;
+  const previousMonth = records[records.length - 2].netIncome;
+  if (previousMonth === 0) return 0;
+  const trend =
+    ((currentMonth - previousMonth) / Math.abs(previousMonth)) * 100;
+  return parseFloat(trend.toFixed(2));
+}
+
+export function getExpenseRatio(records: Record[]) {
   if (records.length === 0) return 0;
-  const sorted = [...records].sort((a, b) =>
-    a.year === b.year ? a.month - b.month : a.year - b.year
-  );
-  const current = Number(sorted.at(-1)?.netIncome ?? 0);
-  const previous = Number(sorted.at(-2)?.netIncome ?? 0);
-  const trend = previous ? ((current - previous) / previous) * 100 : 0;
-  return trend;
+  const currentMonth = records[records.length - 1];
+  const expense = currentMonth.totalExpense;
+  const netIncome = currentMonth.netIncome;
+  if (expense === 0 || netIncome === 0) return 0;
+  const ratio = (expense / netIncome) * 100;
+  return parseFloat(ratio.toFixed(2));
 }

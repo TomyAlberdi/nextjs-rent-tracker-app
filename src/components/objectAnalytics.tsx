@@ -1,9 +1,10 @@
+import ObjectAnalyticsExpenseRatioCard from "@/components/objectAnalyticsExpenseRatioCard";
+import ObjectAnalyticsTrendCard from "@/components/objectAnalyticsTrendCard";
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
 import { useRecordContext } from "@/context/record/useRecordContext";
-import { Group, Record, Unit, UnitType } from "@/lib/interfaces";
-import { getMonthlyTrend } from "@/lib/utils";
-import { MoveRight, TrendingDown, TrendingUp } from "lucide-react";
+import { Group, Unit, UnitType } from "@/lib/interfaces";
+import { getExpenseRatio, getMonthlyTrend, getMonthName } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 interface ObjectAnalyticsProps {
@@ -13,19 +14,29 @@ interface ObjectAnalyticsProps {
 
 const ObjectAnalytics = ({ object, parentType }: ObjectAnalyticsProps) => {
   const { getRecords } = useRecordContext();
-  const [Records, setRecords] = useState<Record[]>([]);
-  const [MonthlyTrend, setMonthlyTrend] = useState(0);
+  const [MonthlyTrend, setMonthlyTrend] = useState<number | null>(null);
+  const [ExpenseRatio, setExpenseRatio] = useState<number | null>(null);
+  const [LastMonth, setLastMonth] = useState<string | null>(null);
+  const [LastTwoMonths, setLastTwoMonths] = useState<string | null>(null);
   const [Loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     const fetchRecords = async () => {
       const data = await getRecords(parentType, object.id, 2025);
-      setRecords(data);
+      if (data.length < 2) {
+        return;
+      }
+      const trend = getMonthlyTrend(data);
+      setMonthlyTrend(trend);
+      const ratio = getExpenseRatio(data);
+      setExpenseRatio(ratio);
+      const lastMonth = getMonthName(data[data.length - 1].month) || null;
+      setLastMonth(lastMonth);
+      const secondLastMonth = getMonthName(data[data.length - 2].month) || null;
+      setLastTwoMonths(`${secondLastMonth} - ${lastMonth}`);
     };
     fetchRecords().then(() => {
-      const trend = getMonthlyTrend(Records);
-      setMonthlyTrend(trend);
       setLoading(false);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,25 +44,23 @@ const ObjectAnalytics = ({ object, parentType }: ObjectAnalyticsProps) => {
 
   return (
     <CardContent className="flex flex-col gap-2 border-b pt-2 pb-4">
-      <span className="text-xl">Análisis</span>
-      <Card className="flex justify-start items-center bg-background rounded-md">
-        {Loading ? (
+      <CardTitle className="text-2xl">Análisis</CardTitle>
+      {Loading ? (
+        <Card className="flex justify-start items-center bg-background rounded-md px-4 py-2 gap-1">
           <Spinner className="size-6" />
-        ) : (
-          <CardTitle className="flex">
-            {/* TODO: Finish object analytics */}
-            {MonthlyTrend > 0
-              ? `Tendencia al alza en ${MonthlyTrend}% este mes ${(
-                  <TrendingUp />
-                )}`
-              : MonthlyTrend < 0
-              ? `Tendencia a la baja en ${MonthlyTrend}% este mes ${(
-                  <TrendingDown />
-                )}`
-              : `Tendencia estable este mes ${(<MoveRight />)}`}
-          </CardTitle>
-        )}
-      </Card>
+        </Card>
+      ) : (
+        <>
+          <ObjectAnalyticsTrendCard
+            trend={MonthlyTrend}
+            lastTwoMonths={LastTwoMonths}
+          />
+          <ObjectAnalyticsExpenseRatioCard
+            ratio={ExpenseRatio}
+            lastMonth={LastMonth}
+          />
+        </>
+      )}
     </CardContent>
   );
 };
